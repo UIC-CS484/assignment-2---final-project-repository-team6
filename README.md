@@ -15,9 +15,13 @@ Josh Dudly
 ### Step 1: => Navigate to the ```/frontend``` folder 
 ### Step 2: ```yarn test```
 
-1. Get basic tests to pass. Create a test that should pass and one that should fail such as 
+1. Get basic tests to pass. Create a test that should pass and one that should fail so we know that our testing is accurate. Create tests such as 
 ```jest 
 expect(false).toBe(false)
+```
+and
+```jest 
+expect(true).toBe(false)
 ```
 
 2. Create a simple test for visual page layout. Expecting a pages headers or text to actually appear on the page.
