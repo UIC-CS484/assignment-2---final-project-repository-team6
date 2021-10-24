@@ -26,7 +26,7 @@ expect(true).toBe(false)
 
 2. Create a simple test for visual page layout. Expecting a pages headers or text to actually appear on the page.
 
-3. Begin work on the backend funcionality testing (most important part of the app by far). Research how to test api calls between the frontend and backend and how to get response data.
+3. Begin work on the backend funcionality testing (most important part of the app by far). Test each api call if possible to make sure it functions correctly. Research how to test api calls between the frontend and backend and how to get response data.
 
 4. Test database inputs and changes to ensure stability of the database. Test user input into database and authenticate input.
 
