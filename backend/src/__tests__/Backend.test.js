@@ -1,17 +1,7 @@
 import request from 'supertest'
 import '@testing-library/jest-dom'
-import app from '../../../../backend/index.js'
+import app from '../../index.js'
 
-// describe("Block of tests for jest", () => {
-//   test('renders learn react link', () => {
-//     render(<Loginform />);
-//     const linkElement = screen.getByText(/Username/i);
-//     expect(linkElement).toBeInTheDocument();
-//   });
-// });
-
-
-// test fails only because jest cant access the database 
 describe("POST /register", () => {
   describe("PASS TEST: When passed a username and password", () => {
     test("should respond with a 200 status code", async () => {
