@@ -12,6 +12,26 @@ describe("POST /register", () => {
       })
       expect(response.statusCode).toBe(200)
     })
+    test("should fail because the integer inputs are not acceptable", async () => {
+      const response = await request(app).post("/register").send({
+        name: 1234, 
+        username: 456, 
+        password: 5555 
+      })
+      expect(response.statusCode).not.toBe(200)
+    })
+  })
+})
+
+describe("POST /edit_password", () => {
+  describe("FAIL TEST: Non logged in user is trying to update a password", () => {
+    test("should respond with a 500 status code", async () => {
+      const response = await request(app).post("/edit_password").send({
+        current_user: "username",
+        updated_password: "new_password"
+      })
+      expect(response.statusCode).toBe(500)
+    })
   })
 })
 
