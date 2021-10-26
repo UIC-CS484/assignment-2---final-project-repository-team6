@@ -12,7 +12,7 @@ Josh Dudly
 
 
 ## Workflow Strategy for Testing: 
-### Step 1: => Navigate to the ```/frontend``` folder 
+### Step 1: => Navigate to the root of the folder you want to test e.g. either the```/frontend``` or ```/backend```folder 
 ### Step 2: ```yarn test```
 
 1. Get basic tests to pass. Create a test that should pass and one that should fail so we know that our testing is accurate. Create tests such as 
