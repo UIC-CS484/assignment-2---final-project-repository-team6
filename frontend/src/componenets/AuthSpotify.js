@@ -1,36 +1,27 @@
-import axios from 'axios';
-import React, {useState, useRef} from 'react';
-import Captcha from './Captcha';
-import { Form } from 'semantic-ui-react';
-import { useHistory } from 'react-router-dom';
+import React from 'react';
+const querystring = require('querystring');
 
 const Spotifylogin = () => {
 
-    const history = useHistory();
-
     const clientId = "426327bb47284651ba7d3aac5790edc1"
-    const redirect_uri = "http://localhost:3000/spotify";
-    const scopes = 'user-read-private user-read-email';
+    const redirect_uri = "http://localhost:3000/spotify/success";
+    const scope = 'user-read-private user-read-email streaming user-read-playback-state user-modify-playback-state user-read-recently-played ';
 
-    const fullAuthLink = 'https://accounts.spotify.com/authorize' + '?response_type=code' + '&client_id=' + clientId + (scopes ? '&scope=' + encodeURIComponent(scopes) : '') +'&redirect_uri=' + encodeURIComponent(redirect_uri)
-    const requestSpotify = () => {
-        /*
-        axios({
-            method: "GET",
-            //withCredentials: true,
-            crossdomain: true,
-            url: fullAuthLink
-        }).then( res => {
-            console.log(res)
+    const fullAuthLink = 'https://accounts.spotify.com/authorize?' + 
+        querystring.stringify({
+            response_type: 'code',
+            client_id: clientId,
+            scope: scope,
+            redirect_uri: redirect_uri,
+            show_dialog: true
         })
-        */
-       history.push(fullAuthLink)
-    }
-    
+
     return(
         <div >
-            <h1>Yoote</h1>
-            <button onClick = {requestSpotify}>Click meee</button>
+            <h1>Gimme yo spotify data</h1>
+            <a href = {fullAuthLink}>
+                <button>Click meee</button>
+            </a>
         </div>
     )
 

@@ -1,9 +1,8 @@
 import axios from 'axios';
-import React, {useState, useRef} from 'react';
+import React, {useState} from 'react';
 import { useHistory } from "react-router-dom";
 import Captcha from './Captcha';
 import { Form } from 'semantic-ui-react';
-import HomePage from './HomePage';
 
 const Loginform = () => {
     const history = useHistory();

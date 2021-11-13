@@ -3,7 +3,8 @@ import { useHistory } from "react-router-dom";
 import { Dropdown, Menu } from 'semantic-ui-react';
 import axios from 'axios'
 import { Button } from 'semantic-ui-react'
-import { Form } from 'semantic-ui-react';
+import SpotifySearch from './Spotify/SpotifySearch';
+import YoutubeSearch from './Youtube/YoutubeSearch';
 
 
 const HomePage= () => {
@@ -20,7 +21,7 @@ const HomePage= () => {
     const handleChange = (event, intent) => {
         setIntent(intent);
 
-        if(intent === "Spotify"){
+        if(intent === "Search Spotify"){
             setSpotifyIsPositive(true)
             setYoutubeIsPositive(false)
         }
@@ -32,11 +33,12 @@ const HomePage= () => {
 
     const renderForm = () => {
         if(intent === "Search Spotify"){
-            return(youtubeSearchAction)
+            return(<SpotifySearch/>)
         }
         else{
-            return(youtubeSearchAction)
+            return(<YoutubeSearch/>)
         }
+
     }
     
     const youtubeSearchAction = (event) =>{
@@ -80,7 +82,7 @@ const HomePage= () => {
             withCredentials: true,
             url:"http://localhost:5000/logout"
         }).then( res => {
-            if(res.data == "success"){
+            if(res.data === "success"){
                 history.push("/")
             }
         })
@@ -97,7 +99,6 @@ const HomePage= () => {
             if(res.data == "Cookie is invalid"){
                 history.push('/')
             }
-            console.log(res)
             setUser(res.data)
         })
     }, [])
@@ -111,24 +112,18 @@ const HomePage= () => {
         <div>
             <Menu>
                 <Menu.Item header> 
-                    <h1>Welcome to our App {user.name}</h1>
+                    <h1>Welcome to our App {user.name}   {response}</h1>
                 </Menu.Item>
                 <Menu.Item position = "right">
                     <Dropdown text = "Account Info" options = {options} simple item />
                 </Menu.Item> 
             </Menu>
             <Button.Group>
-                <Button positive = {setSpotifyIsPositive} onClick={ (event) => handleChange(event, "Search Spotify") } >Search Spotify</Button>
+                <Button positive = {spotifyIsPositive} onClick={ (event) => handleChange(event, "Search Spotify") } >Search Spotify</Button>
                 <Button.Or />
-                <Button positive = {setYoutubeIsPositive} onClick={ (event) => handleChange(event, "Search Youtube") } >Search Youtube</Button>
+                <Button positive = {youtubeIsPositive} onClick={ (event) => handleChange(event, "Search Youtube") } >Search Youtube</Button>
             </Button.Group>
 
-            <Form onSubmit={youtubeSearchAction}>
-                <Form.Group widths = "equal"> 
-                    <Form.Input label = "Search" type = "text" placeholder = "Search Youtube" name = "yt_search" onChange = {(evt) => setYoutubeSearch(evt.target.value)}/> 
-                </Form.Group>
-                <Form.Button type = "submit">Search</Form.Button>
-            </Form>
             {renderForm()}
         </div>
     )

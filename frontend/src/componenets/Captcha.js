@@ -1,5 +1,4 @@
 import ReCAPTCHA from "react-google-recaptcha";
-import Loginform from "./Loginform";
 // import React, {useState, useRef} from 'react';
 
 // Site theme may change if implemented. These booleans are placeholders for a future functionality

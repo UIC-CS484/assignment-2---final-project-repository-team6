@@ -16,7 +16,7 @@ const DeleteAccount = () => {
             url:"http://localhost:5000/delete_user"
         }).then( res => {
             console.log(res.data)
-            if(res.data == "sucess"){
+            if(res.data === "sucess"){
                 history.push("/")
             }
         }).catch( err => {

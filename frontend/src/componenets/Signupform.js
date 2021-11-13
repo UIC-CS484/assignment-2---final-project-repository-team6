@@ -31,7 +31,7 @@ const Signupform = () => {
                 
             }).then( res => {
                 if(res.data == "Success"){
-                    history.push('/HomePage')
+                    history.push('/Spotify')
                 }
                 setReponse(res.data)
             }).catch( err => {

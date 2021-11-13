@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { Menu } from 'semantic-ui-react'
 import UpdateUsername from './UpdateUsername';
 import UpdatePassword from './UpdatePassword';
@@ -18,19 +17,19 @@ const AccountSettings= () => {
     } 
 
     const renderForm = () => {
-        if(selected == "name"){
+        if(selected === "name"){
             return(<UpdateName/>)
         }
-        else if(selected == "username"){
+        else if(selected === "username"){
             return(<UpdateUsername/>)
         }
-        else if(selected == "password"){
+        else if(selected === "password"){
             return(<UpdatePassword/>)
         }
-        else if(selected == "delete"){
+        else if(selected === "delete"){
             return(<DeleteAccount/>)
         }
-        else if(selected == "back"){
+        else if(selected === "back"){
             history.push("/HomePage")
         }
     }

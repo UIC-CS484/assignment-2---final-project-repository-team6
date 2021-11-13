@@ -7,6 +7,10 @@ const bcrypt = require('bcrypt');
 const session = require('express-session')
 const bodyParser = require('body-parser');
 const sqlite3 = require("sqlite3");
+const querystring = require('querystring');
+const cron = require('node-cron');
+const axios = require('axios');
+const { CLIENT_RENEG_WINDOW } = require("tls");
 
 const app = express();
 
@@ -108,7 +112,6 @@ app.post('/register', (req,res) =>{
 });
 
 app.post('/user', (req,res) => {
-    console.log(req.user)
     if (req.isAuthenticated()) {
         res.send(req.user)
     }else{
@@ -147,9 +150,11 @@ app.post('/edit_username', (req,res) => {
     const current_user = req.user.username
     const updated_username = req.body.name
 
-    const checkUsernameExist = `SELECT * FROM userLogin where username = "${updated_username}"`
-    db.run(checkUsernameExist, (err, row) => {
-        if (err) {} // do something idk yet 
+    const checkUsernameExist = `SELECT * FROM userLogin WHERE username="${updated_username}";`
+    //console.log(checkUsernameExist)
+    db.get(checkUsernameExist,(err, row) => {
+
+        if (err) { } // do something idk yet 
         else{
             if(row){
                 res.send("Username already exists try another one")
@@ -157,6 +162,13 @@ app.post('/edit_username', (req,res) => {
             else{
                 const update_username_query = `UPDATE userLogin SET username = "${updated_username}" WHERE username ="${current_user}";`
                 db.run(update_username_query)
+
+                const update_username_inSpotify = `UPDATE spotifyData SET username = "${updated_username}" WHERE username ="${current_user}";`
+                db.run(update_username_inSpotify, (err) => {
+                    if(err){
+                        console.log(err)
+                    }
+                })
 
                 const user = { "username": updated_username, "password": req.user.password, "name": req.user.name}
                 req.logOut();
@@ -204,19 +216,110 @@ app.post('/delete_user', (req,res) => {
     res.send("sucess")
 })
 
+app.post('/spotifyInit', (req, res) => {
 
+    const user = req.user.username
+    const access_token = req.body.access_token
+    const refresh_token = req.body.refresh_token 
+
+    const spotifyInit = `INSERT INTO spotifyData (username, access_token, refresh_token) VALUES("${user}", "${access_token}", "${refresh_token}");`
+
+    db.run(spotifyInit, (err) => {
+        if(err){
+            res.send(err)
+        }
+        else{
+            res.send("Success")
+        }
+    })
+})
+
+app.get("/spotify_accessToken", (req, res) => {
+
+    const getToken = `SELECT * FROM spotifyData WHERE username="${req.user.username}"`
+    db.get(getToken, (err, row) => {
+        if(row){
+            res.send(row.access_token)
+        }
+        else{
+            console.log(err)
+            if(err){
+                res.send("Error")
+            }
+            else{
+                res.send("Error")
+            }
+        }
+    })
+})
+
+cron.schedule("*/60 * * * *", () => {
+    const getAllUsers = `SELECT * FROM spotifyData;`
+
+    console.log("getting users")
+
+    
+    const clientId = "426327bb47284651ba7d3aac5790edc1";
+    const clientSecret = "e418005aab42495587ced18596035912";
+    const headers = {
+        headers:{
+          Authorization: 'Basic ' + new Buffer(clientId + ':' + clientSecret).toString('base64')
+        }
+    }
+
+    db.all(getAllUsers, (err,rows) => {
+
+        if(err){
+            return;
+        }
+
+        rows.forEach( row => {
+            refreshToken = row.refresh_token;
+
+            let data = {
+                grant_type: 'refresh_token',
+                refresh_token: refreshToken,
+            };
+
+            axios.post("https://accounts.spotify.com/api/token", querystring.stringify(data), headers).then( res => {
+
+                console.log("Current username: " + row.username)
+
+                const updateRefresh = `UPDATE spotifyData SET access_token = "${res.data.access_token}" WHERE username = "${row.username}"`;
+                console.log(updateRefresh)
+                db.run(updateRefresh, err => {
+                    if(err){
+                        console.log("database error: " + err)
+                    }
+                }) 
+            }).catch(err => {
+                console.log("Axios error " + err)
+            })
+        })
+    })
+})
 
 // Search Section
 
 app.post('/youtube_api_search', (req,res) => {
+    const YOUTUBE_API_KEY = 'AIzaSyCOVCCGsybib6c8MJE8p1dSNtAQcn7hQmM'
     const search_string = req.body.yt_search
+
     console.log("user searched for: ", search_string)
-    
-    res.send("sucess")
+    // axios.get({
+    //             url: 'https://www.googleapis.com/youtube/v3/',
+    //             method: "Get",
+    //             params: {
+    //                 part: 'snippet',
+    //                 maxResults: 5,
+    //                 key: YOUTUBE_API_KEY
+    //             }
+    //         }).then( res => {
+    //             setReponse(res.data)
+    //         })
+    // res.send("sucess")
 })
 
 app.listen(5000, () => {
     console.log("WELCOME TO MY FINAL WEBSITE wowoowoo")
 })
-
-module.exports = app
