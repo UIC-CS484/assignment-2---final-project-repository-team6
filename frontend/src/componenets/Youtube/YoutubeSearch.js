@@ -36,11 +36,12 @@ const YoutubeSearch = () => {
                     setSongs( songs => [...songs,<YoutubeSong name = {element.snippet.name} id = {element.id.videoId} 
                             uri = {WATCH_URL + element.id.videoId} channel = {element.snippet.channelTitle} 
                             description = {element.snippet.description} key = {element.id.videoId} update = { setSongUri } 
-                            imageSrc = {element.snippet.thumbnails.default.url} /> ])
-                },
-                res.data.items.forEach(element =>{
-                    console.log(element.id.videoId)
-                })
+                            imageSrc = {element.snippet.thumbnails.default.url} thumbnails = {element.snippet.thumbnails} /> ])
+                            console.log("Element", songs)
+                        },
+                // res.data.items.forEach(element =>{
+                //     console.log("Element", element.id.videoId)
+                // })
                 );
             }).catch( err => {
                 console.log(err)
