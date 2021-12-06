@@ -5,13 +5,13 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Build client
-        run: docker build -f ./frontend/Dockerfile -t client .
-      - name: Build server 
-        run: docker build -f ./backend/Dockerfile -t server . 
-      - name: Build stack
-        run: docker-compose up -d
+      # - uses: actions/checkout@v2
+      # - name: Build client
+      #   run: docker build -f ./frontend/Dockerfile -t client .
+      # - name: Build server 
+      #   run: docker build -f ./backend/Dockerfile -t server . 
+      # - name: Build stack
+      #   run: docker-compose up -d
       - name: Connect to Heroku
         with: 
           heroku_email: "fslkmemoe@protonmail.com"
