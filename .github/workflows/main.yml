@@ -14,6 +14,9 @@ jobs:
         run: docker-compose up -d
 jobs:
   build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
     - uses: notyour problem/heroku-deploy@v2
       with:
         heroku_api_key: d2f50875-2aaf-41a7-a671-19c8c6cdd479
