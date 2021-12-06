@@ -16,8 +16,6 @@ jobs:
         with:
           target_branch: gh-pages
           build_dir: build
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_REPO_TOKEN }}
       - name: Build client
         run: docker build -f ./frontend/Dockerfile -t client .
       - name: Build server 
