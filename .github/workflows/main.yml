@@ -12,14 +12,9 @@ jobs:
         run: docker build -f ./backend/Dockerfile -t server . 
       - name: Build stack
         run: docker-compose up -d
-        
-      # - name: Connect to Heroku
-      #   with: 
-      #     heroku_email: "fslkmemoe@protonmail.com"
-      #     heroku_api_key: d2f50875-2aaf-41a7-a671-19c8c6cdd479
-      #     heroku_app_name: cs484-final
-      #   run: 
-      #     - heroku: git::remote -- app $heroku_app_name
-      # - name: push to heroku
-      #   run: git push heroku master 
-        
+            - run: npm test
+      - name: Deploy
+        run: | 
+          git config --global user.name jakeraffe 
+          git config --global user.email jraffe2@uic.edu
+          git remote set-url origin https://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@github.com/assignment-2---final-project-repository-team6
