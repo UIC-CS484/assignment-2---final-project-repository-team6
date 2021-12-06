@@ -78,27 +78,28 @@ const YoutubeSearch = () => {
                         channelVideoCache[currChannelId] = element.id.videoId;
                     }
                 })
-                setState({ setChannelId : null })
-                console.log("state of channelID:", currChannelId)
-                console.log(channelVideoCache)
+                // setState({ setChannelId : null })
             }).catch( err => {
                 console.log(err)
             })
 
             var videoDetailsURL = default_video_details_url + "part=snippet&key=" + YOUTUBE_API_KEY + "&"
-            console.log(videoIdList)
+            console.log("Video detail url:", videoDetailsURL)
+            
             videoIdList.forEach(element => {
+                console.log("Element:", element)
                 axios({
                     url: videoDetailsURL + element,
                     method: 'GET'
                 }).then(res => {
                     console.log("title:", element.snippet.title)
-                    setvideos( videos => [...videos,<YoutubeChannelList name = {currChannelId} title = {element.snippet.title}
+                    setvideos( videos => [...videos,<YoutubeChannelList title = {element.snippet.title}
                         publishedAt = {element.snippet.publishedAt} />])
                 })
             })
-            return <YoutubeChannelList />
-
+            return(
+                <YoutubeChannelList />
+            )
         }
       }
       

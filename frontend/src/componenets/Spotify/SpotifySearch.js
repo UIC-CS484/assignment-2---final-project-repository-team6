@@ -6,18 +6,19 @@ import SpotifyPlaylist from './SpotifyPlaylist'
 import SpotifyPlayer from 'react-spotify-web-playback';
 import CommonArtist from './CommonArtist';
 import "../Styles/styles.css"
+import SpotifyPlaylists from './SpotifyPlaylists';
 const querystring = require('querystring');
 
 const SpotifySearch = () => {
 
     const [search, setSearch] = useState() 
     const [songs, setSongs] = useState([])
+    const [playlists, setPlaylists] = useState([])
     const [currSongUri, setSongUri] = useState()
     const [tokens, setTokens] = useState()
     const [topArtists, setTopArtists] = useState([])
     const [displayRecentSongs, setSearchVideo] = useState()
     const [displayPlaylists, setdisplayPlaylists] = useState()
-    const [playlists, setPlaylists] = useState([])
     const [intent, setIntent] = useState("View Recent Artists")
     const [playlistImages, setPlaylistImages] = useState([])
     const [recentArtistSelected, setRecentArtistSelected] = useState(true)
@@ -88,7 +89,7 @@ const SpotifySearch = () => {
             console.log(res)
 
             setTopArtists([])
-            console.log("songs", res)
+            // console.log("songs", res)
             let artists = {} 
             res.data.items.forEach( element => {
                 const currArtist = element.track.artists[0].name
@@ -106,9 +107,11 @@ const SpotifySearch = () => {
     }
 
     const getUserPlaylists = (headers) =>{
-        axios.get("https://api.spotify.com/v1/me/playlists", headers).then( res => {
+        axios.get("https://api.spotify.com/v1/me/playlists", headers
+        
+        ).then( res => {
 
-            console.log("Playlist Objects", res)
+            // console.log("Playlist Objects", res)
 
             setPlaylists([])
             res.data.items.forEach(element => {
@@ -122,7 +125,7 @@ const SpotifySearch = () => {
             getToken()
             getUserPlaylists(headers);
         })
-        console.log(playlists);
+        // console.log(playlists);
     }
 
     
@@ -160,8 +163,8 @@ const SpotifySearch = () => {
             setPlaylistSelected(false)
         }
         else{
-            setRecentArtistSelected(true)
-            setPlaylistSelected(false)
+            setRecentArtistSelected(false)
+            setPlaylistSelected(true)
         }
     }
     const displayChart = () =>{
@@ -171,9 +174,11 @@ const SpotifySearch = () => {
                     <CommonArtist artists = {topArtists}/> 
                 )
             }
-            return (
-                <SpotifyPlaylist/>
-            )
+            else{
+                return(
+                    <SpotifyPlaylists playlists = {playlists}/>
+                )
+            }
         }
     }
     return(

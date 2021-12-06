@@ -14,5 +14,5 @@ RUN yarn install
 
 # COPY . /server
 
-EXPOSE 5000:5000
+EXPOSE 5001:5000
 CMD ["yarn", "start"]

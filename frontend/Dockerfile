@@ -13,7 +13,7 @@ COPY . /client
 RUN yarn install
 
 
-EXPOSE 3000:3000
+EXPOSE 3001:3000
 
 # Install app dependencies
 CMD ["yarn", "start"]
