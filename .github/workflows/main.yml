@@ -14,7 +14,7 @@ jobs:
         run: docker-compose up -d
 deploy:
   build:
-    - uses: "notyour problem"/heroku-deploy@v2
+    - uses: notyour problem/heroku-deploy@v2
       with:
         heroku_api_key: d2f50875-2aaf-41a7-a671-19c8c6cdd479
         heroku_app_name: "cs484-final"
