@@ -16,4 +16,4 @@ jobs:
       - name: Build server 
         run: docker build -f ./backend/Dockerfile -t server . 
       - name: Build stack
-        run: docker-compose up -d
+        run: docker-compose up
