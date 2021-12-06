@@ -12,7 +12,6 @@ jobs:
         run: docker build -f ./backend/Dockerfile -t server . 
       - name: Build stack
         run: docker-compose up -d
-            - run: npm test
       - name: Deploy
         run: | 
           git config --global user.name jakeraffe 
