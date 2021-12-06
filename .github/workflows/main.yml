@@ -6,9 +6,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Build a stack
-        run: docker build -f ./frontend/Dockerfile -t client . 
+      - name: Build client
+        run: docker build -f ./frontend/Dockerfile -t client .
+      - name: Build server 
         run: docker build -f ./backend/Dockerfile -t server . 
+      - name: Build stack
         run: docker-compose up -d
       - name: Test
         run: docker run --network client appropriate/curl -s --retry 10 --retry-conrefused https://localhost:3000
