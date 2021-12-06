@@ -11,13 +11,14 @@ jobs:
           git config --global user.name jakeraffe 
           git config --global user.email jraffe2@uic.edu
           git remote set-url origin https://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@github.com/assignment-2---final-project-repository-team6
+      - name: Build Server
+        run: docker build -f ./backend/Dockerfile -t server . 
+      - name: Build client
+        run: docker build -f ./frontend/Dockerfile -t client .
+      
       - name: Building Dep
+        uses: jakeraffe@ghaction-github-pages@v1
         with:
           target_branch: gh-pages
           build_dir: build
-      - name: Build client
-        run: docker build -f ./frontend/Dockerfile -t client .
-      - name: Build server 
-        run: docker build -f ./backend/Dockerfile -t server . 
-      - name: Build stack
         run: docker-compose up
