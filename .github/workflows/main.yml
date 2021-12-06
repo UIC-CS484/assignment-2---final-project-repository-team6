@@ -17,6 +17,8 @@ jobs:
         run: docker build -f ./frontend/Dockerfile -t client .
       
       - name: Building Dep
-        run: | cd ./frontend
-               yarn start 
-               
+        uses: jakeraffe@ghaction-github-pages@v1
+        with:
+          target_branch: gh-pages
+          build_dir: build
+        run: docker-compose up
