@@ -12,9 +12,8 @@ jobs:
         run: docker build -f ./backend/Dockerfile -t server . 
       - name: Build stack
         run: docker-compose up -d
-      - name: deploy-heroku
-        - uses: "notyour problem"/heroku-deploy@v2 # This is the action
-          with:
-            heroku_api_key: d2f50875-2aaf-41a7-a671-19c8c6cdd479
-            heroku_app_name: "cs484-final" #Must be unique in Heroku
-            heroku_email: "fslkmemoe@protonmail.com"
+      - uses: "notyour problem"/heroku-deploy@v2 # This is the action
+        with:
+          heroku_api_key: d2f50875-2aaf-41a7-a671-19c8c6cdd479
+          heroku_app_name: "cs484-final" #Must be unique in Heroku
+          heroku_email: "fslkmemoe@protonmail.com"
