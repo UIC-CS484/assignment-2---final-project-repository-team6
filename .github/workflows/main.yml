@@ -12,10 +12,8 @@ jobs:
         run: docker build -f ./backend/Dockerfile -t server . 
       - name: Build stack
         run: docker-compose up -d
-
 deploy:
   build:
-    - uses: actions/checkout@v2
     - uses: "notyour problem"/heroku-deploy@v2 # This is the action
       with:
         heroku_api_key: d2f50875-2aaf-41a7-a671-19c8c6cdd479
