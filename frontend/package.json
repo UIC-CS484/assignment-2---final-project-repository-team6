@@ -29,7 +29,7 @@
     "web-vitals": "^1.0.1",
     "youtube-api-search": "^0.0.5"
   },
-  "homepage": "https://uic-cs484.github.io/assignment-2---final-project-repository-team6/",
+  "homepage": "https://uic-cs484.github.io/assignment-2---final-project-repository-team6/app/",
   "scripts": {
     "predeploy": "yarn build",
     "deploy": "gh-pages -d build",
