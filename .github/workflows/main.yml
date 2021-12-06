@@ -17,9 +17,7 @@ jobs:
           heroku_email: "fslkmemoe@protonmail.com"
           heroku_api_key: d2f50875-2aaf-41a7-a671-19c8c6cdd479
           heroku_app_name: cs484-final
-          
         run: heroku: git::remote -- app $heroku_app_name
-
       - name: push to heroku
         run: git push heroku master 
         
