@@ -17,7 +17,6 @@ jobs:
         run: docker build -f ./frontend/Dockerfile -t client .
       
       - name: Building Dep
-        uses: jakeraffe@ghaction-github-pages@v1
         with:
           target_branch: gh-pages
           build_dir: build
