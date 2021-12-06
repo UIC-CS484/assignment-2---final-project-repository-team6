@@ -16,4 +16,4 @@ RUN yarn install
 EXPOSE 3001:3000
 
 # Install app dependencies
-CMD ["yarn", "start"]
+CMD ["yarn", "deploy"]
