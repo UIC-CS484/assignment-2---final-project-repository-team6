@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/assignment-2---final-project-repository-team6/static/css/main.391e8392.chunk.css",
+    "main.js": "/assignment-2---final-project-repository-team6/static/js/main.6ab1b0ea.chunk.js",
+    "main.js.map": "/assignment-2---final-project-repository-team6/static/js/main.6ab1b0ea.chunk.js.map",
+    "runtime-main.js": "/assignment-2---final-project-repository-team6/static/js/runtime-main.edc012ce.js",
+    "runtime-main.js.map": "/assignment-2---final-project-repository-team6/static/js/runtime-main.edc012ce.js.map",
+    "static/css/2.1aaf6ebc.chunk.css": "/assignment-2---final-project-repository-team6/static/css/2.1aaf6ebc.chunk.css",
+    "static/js/2.04dd85c2.chunk.js": "/assignment-2---final-project-repository-team6/static/js/2.04dd85c2.chunk.js",
+    "static/js/2.04dd85c2.chunk.js.map": "/assignment-2---final-project-repository-team6/static/js/2.04dd85c2.chunk.js.map",
+    "index.html": "/assignment-2---final-project-repository-team6/index.html",
+    "static/css/2.1aaf6ebc.chunk.css.map": "/assignment-2---final-project-repository-team6/static/css/2.1aaf6ebc.chunk.css.map",
+    "static/css/main.391e8392.chunk.css.map": "/assignment-2---final-project-repository-team6/static/css/main.391e8392.chunk.css.map",
+    "static/js/2.04dd85c2.chunk.js.LICENSE.txt": "/assignment-2---final-project-repository-team6/static/js/2.04dd85c2.chunk.js.LICENSE.txt",
+    "static/media/semantic.min.css": "/assignment-2---final-project-repository-team6/static/media/outline-icons.ddae9b1b.woff",
+    "static/media/heart.1e4f827e.png": "/assignment-2---final-project-repository-team6/static/media/heart.1e4f827e.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.edc012ce.js",
+    "static/css/2.1aaf6ebc.chunk.css",
+    "static/js/2.04dd85c2.chunk.js",
+    "static/css/main.391e8392.chunk.css",
+    "static/js/main.6ab1b0ea.chunk.js"
+  ]
+}
