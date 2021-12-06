@@ -17,7 +17,7 @@ jobs:
         run: docker build -f ./frontend/Dockerfile -t client .
       
       - name: Building Dep
+        run: docker-compose up
         with:
           target_branch: gh-pages
           build_dir: build
-        run: docker-compose up
