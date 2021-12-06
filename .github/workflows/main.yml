@@ -12,7 +12,7 @@ jobs:
         run: docker build -f ./backend/Dockerfile -t server . 
       - name: Build stack
         run: docker-compose up -d
-deploy:
+jobs:
   build:
     - uses: notyour problem/heroku-deploy@v2
       with:
