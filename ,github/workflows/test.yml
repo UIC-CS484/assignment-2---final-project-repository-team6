@@ -1,0 +1,14 @@
+name: Compose workflow
+
+on: 
+  push
+
+jobs: 
+  test:
+    runs-on: ubuntu-latest
+      - uses: actions/checkout@v2
+      - name: Build a stack
+        run: docker-compose up -d
+      - name: Test
+        run: docker run --network container:client appropriate/curl -s --retry 10 --retry-conrefused https://localhost:3000
+        # run: docker run --network container:server appropriate/curl -s --retry 10 --retry-conrefused https://localhost:5000
