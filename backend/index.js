@@ -97,8 +97,10 @@ app.post('/register', (req,res) =>{
                 }
 
                 console.log("Created hash: ",hash)
-                const sqlQuery = `INSERT INTO userLogin(name, username, password) VALUES("${name}", "${username}", "${hash}");`
-                db.run(sqlQuery)
+                // `INSERT INTO userLogin(name, username, password) VALUES(?,?,?)`, [name, username, hash]
+                // const sqlQuery = `INSERT INTO userLogin(name, username, password) VALUES("${name}", "${username}", "${hash}");`
+                db.run(`INSERT INTO userLogin(name, username, password) VALUES(?,?,?)`, [name, username, hash])
+                db.run(`INSERT INTO youtubeUserInfo(username) VALUES(?)`, [username])
 
                 const user = { "username": username, "password":hash, "name": name}
 
@@ -129,8 +131,8 @@ app.post('/edit_name', (req,res) => {
     const curr_user = req.user.username
     const updated_name = req.body.name 
 
-    const update_name_query = `UPDATE userLogin SET name= "${updated_name}" WHERE username ="${curr_user}";`
-    db.run(update_name_query , [] , (err) => {
+    // const update_name_query = `UPDATE userLogin SET name= "${updated_name}" WHERE username ="${curr_user}";`
+    db.run(`UPDATE userLogin SET name=? WHERE username = ?`, [updated_name, curr_user], (err) => {
         if (err) { } // do something
         else{
 
@@ -150,9 +152,9 @@ app.post('/edit_username', (req,res) => {
     const current_user = req.user.username
     const updated_username = req.body.name
 
-    const checkUsernameExist = `SELECT * FROM userLogin WHERE username="${updated_username}";`
+    const checkUsernameExist = `SELECT * FROM userLogin WHERE username=?;`
     //console.log(checkUsernameExist)
-    db.get(checkUsernameExist,(err, row) => {
+    db.get(checkUsernameExist, [updated_username], (err, row) => {
 
         if (err) { } // do something idk yet 
         else{
@@ -160,11 +162,11 @@ app.post('/edit_username', (req,res) => {
                 res.send("Username already exists try another one")
             }
             else{
-                const update_username_query = `UPDATE userLogin SET username = "${updated_username}" WHERE username ="${current_user}";`
-                db.run(update_username_query)
+                // const update_username_query = `UPDATE userLogin SET username = "${updated_username}" WHERE username ="${current_user}";`
+                db.run(`UPDATE userLogin SET username = ? WHERE username = ?`, [updated_username, current_user])
 
-                const update_username_inSpotify = `UPDATE spotifyData SET username = "${updated_username}" WHERE username ="${current_user}";`
-                db.run(update_username_inSpotify, (err) => {
+                // const update_username_inSpotify = `UPDATE spotifyData SET username = "${updated_username}" WHERE username ="${current_user}";`
+                db.run(`UPDATE spotifyData SET username = ? WHERE username = ?`, [updated_username, current_user],  (err) => {
                     if(err){
                         console.log(err)
                     }
@@ -191,8 +193,8 @@ app.post('/edit_password', (req,res) => {
             return res.sendStatus(500)
         }
         console.log("hashing password:", updated_password, "Created hash: ",hash)
-        const update_password_query = `UPDATE userLogin SET password = "${hash}" WHERE username ="${current_user}";`
-        db.run(update_password_query, (err) => {
+        // const update_password_query = `UPDATE userLogin SET password = "${hash}" WHERE username ="${current_user}";`
+        db.run(`UPDATE userLogin SET password = ? WHERE username = ?`, [hash, current_user],  (err) => {
             if(err) { }
             else{
                 const user = { name: req.user.name, username: req.user.username, password: hash}
@@ -222,9 +224,9 @@ app.post('/spotifyInit', (req, res) => {
     const access_token = req.body.access_token
     const refresh_token = req.body.refresh_token 
 
-    const spotifyInit = `INSERT INTO spotifyData (username, access_token, refresh_token) VALUES("${user}", "${access_token}", "${refresh_token}");`
+    // const spotifyInit = `INSERT INTO spotifyData (username, access_token, refresh_token) VALUES("${user}", "${access_token}", "${refresh_token}");`
 
-    db.run(spotifyInit, (err) => {
+    db.run(`INSERT INTO spotifyData (username, access_token, refresh_token) VALUES(?, ?, ?)`, [user, access_token, refresh_token], (err) => {
         if(err){
             res.send(err)
         }
@@ -301,23 +303,33 @@ cron.schedule("*/60 * * * *", () => {
 
 // Search Section
 
-app.post('/youtube_api_search', (req,res) => {
-    const YOUTUBE_API_KEY = 'AIzaSyCOVCCGsybib6c8MJE8p1dSNtAQcn7hQmM'
-    const search_string = req.body.yt_search
+app.get("/youtube_playlist_search", (req, res) => {
 
-    console.log("user searched for: ", search_string)
-    // axios.get({
-    //             url: 'https://www.googleapis.com/youtube/v3/',
-    //             method: "Get",
-    //             params: {
-    //                 part: 'snippet',
-    //                 maxResults: 5,
-    //                 key: YOUTUBE_API_KEY
-    //             }
-    //         }).then( res => {
-    //             setReponse(res.data)
-    //         })
-    // res.send("sucess")
+    // db.get(`SELECT username FROM youtubeUserInfo WHERE username="floop";`, (err, row) => {
+    //     if(row){
+    //         // var song_list;
+    //         // var artist_list
+    //         // db.get(`SELECT * FROM youtubeSongs WHERE playlist_id="?"`, [row.playlist_id], (err, row) => {
+    //         //     if(err){
+    //         //         res.send(err);
+    //         //     }
+    //         //     else{
+    //         //         song_list = row.song_name;
+    //         //         artist_list = row.artist_name;
+    //         //     }
+    //         // });
+    //         // res.send(row.username)
+    //     }
+    //     else{
+    //         console.log(err)
+    //         if(err){
+    //             res.send(err)
+    //         }
+    //         else{
+    //             res.send("Error")
+    //         }
+    //     }
+    // })
 })
 
 app.listen(5000, () => {

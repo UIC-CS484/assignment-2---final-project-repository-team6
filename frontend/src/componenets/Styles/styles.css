@@ -1,0 +1,44 @@
+ /* href="https://icons8.com" */
+ 
+ .button_center{
+    width: "50%";
+    margin-left: "auto";
+    margin-right: "auto";
+    padding-right: "1em";
+}
+
+.global-site-margins{
+    margin-left:"9%";
+    margin-right:"9%";
+}
+.youyube_dark_mode{
+    background-color: "#181818";
+}
+
+.video-wrapper {
+    height: 100%;
+    width: 100%;
+    min-height: 10px;
+}
+
+
+.player-wrapper {
+    width: 100%;
+    height: auto;
+}
+
+.react-player {
+    top: 0;
+    left: 0;
+}
+.bar{
+    position: relative;
+    text-align: center;
+    background-color: black;
+}
+
+.bar p{
+    position: relative;
+    color: white;
+    margin-top: -3px;
+}

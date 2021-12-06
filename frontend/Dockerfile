@@ -1,19 +1,19 @@
-FROM node:alpine
-# Install app dependencies
+FROM node:14.18.1
 
-RUN mkdir -p /client
+LABEL version="1.0"
+LABEL description="Frontend Image"
+LABEL maintainer = "jacobvraffe@gmail.com"
+
+# RUN mkdir -p /client
 WORKDIR /client
  
-COPY package.json /client 
-COPY yarn.lock /client
+COPY . /client 
 
+# Install all dependencies
 RUN yarn install
 
-# Bundle app source
-COPY . ./
-COPY . /src
-COPY . /public
-ENTRYPOINT ["/bin/frontend"]
 
-# EXPOSE 3000
+EXPOSE 3001:3000
+
+# Install app dependencies
 CMD ["yarn", "start"]

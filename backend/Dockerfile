@@ -1,17 +1,18 @@
-FROM node:alpine
-# Install app dependencies
+FROM node:14.18.1
 
-RUN mkdir -p /server
+LABEL version="1.0"
+LABEL description="Backend Image"
+LABEL maintainer = "jraffe@uic.edu"
  
 WORKDIR /server
 
 # Bundle app source
-COPY package.json /server
-COPY yarn.lock /server
-
-RUN yarn install
-
 COPY . /server
 
-# EXPOSE 3001
+# Install app dependencies
+RUN yarn install
+
+# COPY . /server
+
+EXPOSE 5001:5000
 CMD ["yarn", "start"]

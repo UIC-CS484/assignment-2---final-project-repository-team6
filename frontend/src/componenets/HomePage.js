@@ -5,6 +5,7 @@ import axios from 'axios'
 import { Button } from 'semantic-ui-react'
 import SpotifySearch from './Spotify/SpotifySearch';
 import YoutubeSearch from './Youtube/YoutubeSearch';
+import "./Styles/styles.css";
 
 
 const HomePage= () => {
@@ -39,33 +40,6 @@ const HomePage= () => {
             return(<YoutubeSearch/>)
         }
 
-    }
-    
-    const youtubeSearchAction = (event) =>{
-        if(yt_search){
-            axios({
-                method: "post",
-                data: {
-                    yt_search: yt_search
-                },
-                withCredentials: true,
-                url:"http://localhost:5000/youtube_api_search"
-                
-            }).then( res => {
-                setReponse(res.data)
-
-            }).catch( err => {
-                if(err.message === "Request failed with status code 401"){
-                    setReponse("Failed search lookup")
-                }
-                else{
-                    setReponse(JSON.stringify(err))
-                }
-            })
-        }
-        else{
-            console.log("No search sent")
-        }
     }
 
 
@@ -111,19 +85,23 @@ const HomePage= () => {
     return(
         <div>
             <Menu>
-                <Menu.Item header> 
+                <Menu.Item header position="left"> 
                     <h1>Welcome to our App {user.name}   {response}</h1>
+                </Menu.Item>
+                <Menu.Item style={{marginLeft:"-5%"}}></Menu.Item>
+                <Menu.Item position = "center" >
+                    <div>
+                        <Button.Group>
+                            <Button positive = {spotifyIsPositive} onClick={ (event) => handleChange(event, "Search Spotify") } >Search Spotify</Button>
+                            <Button.Or />
+                            <Button negative = {youtubeIsPositive} onClick={ (event) => handleChange(event, "Search Youtube") } >Search Youtube</Button>
+                        </Button.Group>
+                    </div>
                 </Menu.Item>
                 <Menu.Item position = "right">
                     <Dropdown text = "Account Info" options = {options} simple item />
                 </Menu.Item> 
             </Menu>
-            <Button.Group>
-                <Button positive = {spotifyIsPositive} onClick={ (event) => handleChange(event, "Search Spotify") } >Search Spotify</Button>
-                <Button.Or />
-                <Button positive = {youtubeIsPositive} onClick={ (event) => handleChange(event, "Search Youtube") } >Search Youtube</Button>
-            </Button.Group>
-
             {renderForm()}
         </div>
     )
